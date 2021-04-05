@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 
 namespace indieGamer.Multiplayer
 {
-    public class PlayerAnimatorManager : MonoBehaviour
+    public class PlayerAnimatorManager : MonoBehaviourPun
     {
         private Animator animator;
 
@@ -23,6 +24,12 @@ namespace indieGamer.Multiplayer
 
         void Update()
         {
+
+            if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+            {
+                return;
+            }
+
             if (!animator)
             {
                 return;
@@ -34,7 +41,7 @@ namespace indieGamer.Multiplayer
             if (stateInfo.IsName("Base Layer.Run"))
             {
                 // When using trigger parameter
-                if (Input.GetButtonDown("Fire1"))
+                if (Input.GetButtonDown("Fire2"))
                 {
                     animator.SetTrigger("Jump");
                 }
